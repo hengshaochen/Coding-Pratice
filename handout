@@ -1,0 +1,96 @@
+1. Array
+	Merge K sorted array / Intersection of two Array
+	Array中求第K大的數字 O(n) --> K-select
+	兩個Array求Median **
+	Sliding Window
+		固定window size, 每次最左邊少掉一個, 最右邊多出一個
+
+	Prefix Sum:給一array, 用一個數組存prefix sum, 這樣可以在O(1)的時間計算“任意區間的subarray sum"
+		0 1 2 3 4 idx
+		3 2 1 5 4 value
+	  	0 1 2 3 4 5 prefix idx
+	  	0 3 5 6 11 15
+	  sum[1-3] = prefix[4] - prefix[1] = 11 - 3 = 8	
+		sum[2 - 5] = prefix[6] - prefix[2]
+		prefix[0] = 0
+		prefix[i]定義：array的0到i-1的和
+
+2. Tree的走訪: 通常Time Complexity是O(n), 掃一次樹
+	前中後序, 用recursive or iteration
+	樹的divide and conquer recursive求解問題**
+		心得：主要是要想清楚helper function的定義 以及 該節點的任務是什麼
+		三個步驟：1. 當前點要怎麼切割問題給兒子 2. 拿到兒子給的資訊後要做什麼處理 3. 當前點要回傳什麼給父親
+		botton-up: 從root推到最底層, 回朔回來的時候求解
+		top-down : 父親傳給兒子時就判斷求解
+	Binary Tree vs Tree?
+		Binary Tree可以直接用兩個遞迴式往下傳
+		Tree則是要使用for loop, 類似做DFS的意思（想想OA第二題）
+	Binary Search Tree: 走inorder會是排序好的結果, BST跟Binary Search很像, 如果BST找target只需要O(logn)
+		心得：如果題目給你是BST, 要從BST的性質去想, root的左邊比root小, root的右邊比root大(LCA in BST), 通常這樣思考
+			 會得到一個比普通Binary Tree還簡單/有效率的解法. 若有好好使用BST的性質, 通常找target node可以在O(logn)找到
+
+3. BFS: 用Queue實現
+	求連在一塊的東西有幾個：Number of islands / Connected Component / Friend circle
+	求一點到另一點的shortest path
+	Binary Tree Level order traversal
+	Topological Sorting: 要對周圍的點把鄰居都-1
+
+4. DFS: 用Stack實現, 寫的時候可以寫成recursive
+	樹/圖的走訪：
+		Tree的traverse都算是DFS
+	窮舉：
+		Permutation / Combination
+
+5. Two pointer: 通常是針對一個array(一維居多)用雙指針進行掃描. 必須先定義好left, right指針的定義
+	題型：TWO SUM及其變形
+
+	題型：對一個array劃分成兩塊, 左半部有什麼特性, 右半部有什麼特性
+		Move Zero / Move space: left的左邊都沒有0, right負責做traverse
+		Sort Color
+		Partition array by odd and even
+
+6. Binary Search: 題目給的array必須是 "排序過" 而且希望你找target, 並且是要求O(logn)完成
+	有可能會給一個分段sorted的array, 叫你求出斷點, 那就拿第一個數字 或 最後一個數字 當作reference
+	**Search in Rotated sorted array
+
+7. Linked-List
+	Linked-List的基本操作（新增元素、刪除元素、反轉）
+		head.next = xxx  --> 更改linked-list的結構
+		head = head.next --> 移動指標
+	把Array的能裝的用Linked-List裝, 然後做操作, 所以有些題目跟array一樣, 只是改成在linked-list上做
+		Add two number
+		Sort list / Merge List / Partition List
+	經典題
+		Reverse node in k-group 
+		copy list with random pointer
+
+8. HashMap / HashSet
+	用法： 1) 給一個key, 可以在"趨近"於:O(1)時間內取得value / 2)因為key只能唯一, 因此可以用來去除“重複”
+		map.put / map.get
+		set.add / set.remove
+	HashTable 支持多線程 / HashMap 不支援多線程
+	Hash的底層運作：用Array + Linked-List or Red-Black Balanced Tree來實作.
+		put: 1) 把key丟到hash function裡面去計算, 得到hash code 如果是string就是O(String長度), 把code % 					hash目前的size得到index
+			 2) 得到index後, 若這個坑是空的, 直接放. 若已經有東西在這個坑上, 沿著linked-list往後找直到沒有collision,
+			    worst case會是O(linked-list的長度), 但在java8, linked-list改用紅黑樹(BST), O(紅黑樹深度 = logn)效能較高 
+		get: 1) 把key丟到hash function得到code, code % hash size得到index
+			 2) 得到index後, 沿著index找結果
+
+	關於Rehashing: 如果capacity超過1/10左右, 就會進行rehashing, 把size放大兩倍, 然後元素放到新的對應的坑, 						  因為不rehashing衝突會太多, 效率會變很差. 但rehashing也很累, 因為要把所有元素重新對應
+	題目： LRU Cache
+
+9. Heap (Priority Queue)
+	可以在O(1)取得最大/最小值, O(logn)插入,刪除
+	使用時機：可以持續維護前k大的元素
+		Top k largest element / HIGH FIVE / K closet point
+		Merge K sorted list
+
+10. DP
+	1. 定義清楚DP[i][j] / 2. 轉移方程 / 3. 初始化 / 4. 回傳的答案
+
+11. String
+
+12. Union-Find
+	要很熟UF的撰寫方式, 可以用在找group, 例如Friend Circle, Number of islands, Minimum Spanning Tree
+	Union: 先find兩個的root, 若兩個root不同代表不在同一群, 則把小的併入大的
+	Find:  回傳這個節點的root是誰（這個節點屬於那個group）
